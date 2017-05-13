@@ -1,6 +1,7 @@
 package models.dbModels;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import models.android.InsertTextRequestModel;
 import models.telegramModels.IncomingBotMessage;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
@@ -79,6 +80,18 @@ public class UserModel {
         newUser.userId = String.valueOf(botMessage.message.from.id);
         newUser.name = botMessage.message.from.first_name + " " + botMessage.message.from.last_name;
         newUser.chatId = String.valueOf(botMessage.message.chat.id);
+        return newUser.insert();
+    }
+
+
+    public static UserModel getUserByChatMessage(InsertTextRequestModel request) {
+        UserModel result = messages().findOne("{\"userId\": \"" + request.userID + "\"}").as(UserModel.class);
+        if (result != null)
+            return result;
+        UserModel newUser = new UserModel();
+        newUser.userId = String.valueOf(request.userID);
+        newUser.name = request.userName;
+        newUser.chatId = String.valueOf(request.chatID);
         return newUser.insert();
     }
 

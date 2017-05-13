@@ -1,6 +1,7 @@
 package logic.textImport;
 
 import logic.JacobConst;
+import models.android.InsertTextRequestModel;
 import models.dbModels.UserModel;
 import models.telegramModels.IncomingBotMessage;
 import play.Configuration;
@@ -36,15 +37,20 @@ public class TextLoader {
         new ContentLoder(message).start();
     }
 
+    public void loadText(InsertTextRequestModel message) {
+        new ContentLoder(message).start();
+    }
+
 
     private class ContentLoder extends Thread {
 
-        private final IncomingBotMessage message;
+        private InsertTextRequestModel restRequest;
+        private IncomingBotMessage telegramMessage;
         private String content;
         private final String url;
 
         public ContentLoder(IncomingBotMessage message) {
-            this.message = message;
+            this.telegramMessage = message;
 
             int from = message.message.entities.get(0).offset;
             int to = message.message.entities.get(0).length + from;
@@ -53,11 +59,22 @@ public class TextLoader {
             this.content = "";
         }
 
+        public ContentLoder(InsertTextRequestModel message) {
+            url = null;
+            this.restRequest = message;
+        }
+
         @Override
         public void run() {
             super.run();
-            this.content = clear(getTextByUrl(url));
-            UserModel user = getUserByChatMessage(message);
+            UserModel user;
+            if (telegramMessage != null) {
+                user = getUserByChatMessage(telegramMessage);
+                this.content = clear(getTextByUrl(url));
+            } else {
+                user = getUserByChatMessage(restRequest);
+                this.content = restRequest.text;
+            }
             Logger.info("starting processing word");
             ITextAnalayzer analyzer = new TextLoaderFirstVariant();
             analyzer.setResultListener(wordFrequencyMap -> {
