@@ -1,0 +1,26 @@
+package helper;
+
+import models.telegramModels.SendMessageModel;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+/**
+ * Created by anatoly on 13.05.17.
+ */
+public class MessageButtonDecorator {
+    public SendMessageModel sendMessageModel;
+    private MessageButtonDecorator(){}
+
+    public static MessageButtonDecorator typicalDecorator(SendMessageModel sendMessageModel) {
+        MessageButtonDecorator mbd = new MessageButtonDecorator();
+        mbd.sendMessageModel = sendMessageModel;
+        return mbd;
+    }
+
+    public void addButtonsLine(String... title) {
+        ArrayList<String> newLine = new ArrayList<>(title.length);
+        newLine.addAll(Arrays.asList(title));
+        sendMessageModel.reply_markup.addNewLine(newLine);
+    }
+}
