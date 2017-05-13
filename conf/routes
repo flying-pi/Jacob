@@ -9,5 +9,7 @@ POST        /botEnterpoint/        controllers.BotController.receiveCommonBotMes
 
 POST        /addText/               controllers.AndroidApi.addText
 
+POST        /getRecomendation/      controllers.AndroidApi.getRecomendation
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file          controllers.Assets.versioned(path="/public", file: Asset)
