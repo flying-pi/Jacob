@@ -1,0 +1,21 @@
+logs
+project/project
+project/target
+target
+tmp
+.history
+dist
+/.idea
+/*.iml
+/out
+/.idea_modules
+/.classpath
+/.project
+/RUNNING_PID
+/.settings
+/.g8
+
+    https://peaceful-falls-23378.herokuapp.com/bot
+
+
+    api.telegram.org/bot391669158:AAGgpqBHRwEpLio5tDTfnbDOt3B5E7QUbaY/setWebhook?url=https://peaceful-falls-23378.herokuapp.com/bot
