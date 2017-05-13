@@ -1,0 +1,3 @@
+
+для того что б смотреть логи в консольки)
+heroku logs --app jacob-bot --tail
