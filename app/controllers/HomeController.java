@@ -1,10 +1,17 @@
 package controllers;
 
+import models.dbModels.DictionaryModel;
+import models.dbModels.StatisticModel;
+import models.dbModels.UserModel;
+import models.dbModels.WordModel;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -19,6 +26,7 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
+
         try {
             URL url = new URL("httlps://brightreads.com/bring-back-home-ec-f72cd8090d12?source=userActivityShare-f166dc4b8883-1494671781");
         } catch (MalformedURLException e) {
