@@ -1,5 +1,6 @@
 package helper;
 
+import logic.JacobConst;
 import models.telegramModels.SendMessageModel;
 
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ import java.util.Arrays;
  */
 public class MessageButtonDecorator {
     SendMessageModel sendMessageModel;
-    private MessageButtonDecorator(){
+
+    private MessageButtonDecorator() {
     }
 
     public static MessageButtonDecorator typicalDecorator(SendMessageModel sendMessageModel) {
@@ -23,5 +25,9 @@ public class MessageButtonDecorator {
         ArrayList<String> newLine = new ArrayList<>(title.length);
         newLine.addAll(Arrays.asList(title));
         sendMessageModel.reply_markup.addNewLine(newLine);
+    }
+
+    public void addMenu() {
+        addButtonsLine(JacobConst.TELEGRAM_COMMANDS.menu);
     }
 }

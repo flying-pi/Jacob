@@ -1,5 +1,6 @@
 package logic.textImport;
 
+import helper.MessageButtonDecorator;
 import logic.JacobConst;
 import logic.externalServices.TelegramApi;
 import models.android.InsertTextRequestModel;
@@ -42,6 +43,7 @@ public class TextLoader {
         SendMessageModel response = new SendMessageModel();
         response.text = JacobConst.TELEGRAM_RESPONSE.loadedData;
         response.chat_id = message.message.chat.id;
+        MessageButtonDecorator.typicalDecorator(response).addMenu();
         telegramApi.sendMessage(response);
     }
 

@@ -5,6 +5,7 @@ package logic;
 public class JacobConst {
     public static class ENTITIES_TYPE{
         public static final  String URL = "url";
+        public static final  String BOT_COMMAND = "bot_command";
     }
 
     public static class WORD{
@@ -14,5 +15,13 @@ public class JacobConst {
     public static class TELEGRAM_RESPONSE{
         public static final String loadedData = "Данные были отправлены на обработку, " +
                 "через некоторое время Ваш словарный запас пополнится";
+        public static final String menuMessage = "Выерете пожалуйста пункты меню";
+    }
+
+    public class TELEGRAM_COMMANDS {
+
+        public static final String menu = "/menu";
+        public static final String getRecomendation = "/getRecommendation";
+        public static final String getSetForLearn = "/getWordSet";
     }
 }
