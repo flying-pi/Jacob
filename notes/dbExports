@@ -4,4 +4,3 @@ mongoimport -h ds137801.mlab.com:37801 -d words_db -c WordFrequencyModel -u Jaco
 
 mongoexport -h 127.0.0.1:27017 -d bot_test -c WordSetInfo  -o ./WordSetInfo.dump
 mongoimport -h ds137801.mlab.com:37801 -d words_db -c WordSetInfo -u JacobBot -p sdfsadfasdfasdfasdfsdafsddsadf --file ./WordSetInfo.dump
-
