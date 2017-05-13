@@ -9,15 +9,15 @@ import org.bson.types.ObjectId;
 public class WordModel {
     @JsonProperty("_id")
     public ObjectId id;
-    public String wordEnd = "";
-    public String wordRus = "";
-    public float usage = 0f;
-    public float frequency = 0f;
 
-    public WordModel(String wordEnd, String wordRus, float usage, float frequency) {
-        this.wordEnd = wordEnd;
+    public String wordEng = "";
+    public String wordRus = "";
+    public double frequency = 0d;
+    public double progress = 0d;
+
+    public WordModel(String wordEng, String wordRus, double usage, double frequency) {
+        this.wordEng = wordEng;
         this.wordRus = wordRus;
-        this.usage = usage;
         this.frequency = frequency;
     }
 
