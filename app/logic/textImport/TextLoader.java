@@ -1,9 +1,11 @@
 package logic.textImport;
 
 import logic.JacobConst;
+import logic.externalServices.TelegramApi;
 import models.android.InsertTextRequestModel;
 import models.dbModels.UserModel;
 import models.telegramModels.IncomingBotMessage;
+import models.telegramModels.SendMessageModel;
 import play.Configuration;
 import play.Logger;
 import play.libs.ws.WSClient;
@@ -16,6 +18,7 @@ import static models.dbModels.UserModel.getUserByChatMessage;
  * Created by yurabraiko on 13.05.17.
  */
 public class TextLoader {
+    TelegramApi telegramApi;
 
     public static boolean isContainUrl(IncomingBotMessage message) {
         try {
@@ -31,10 +34,15 @@ public class TextLoader {
     public TextLoader(WSClient ws, Configuration configuration) {
         this.ws = ws;
         this.configuration = configuration;
+        telegramApi = new TelegramApi(ws, configuration);
     }
 
     public void proccessMessage(IncomingBotMessage message) {
         new ContentLoder(message).start();
+        SendMessageModel response = new SendMessageModel();
+        response.text = JacobConst.TELEGRAM_RESPONSE.loadedData;
+        response.chat_id = message.message.chat.id;
+        telegramApi.sendMessage(response);
     }
 
     public void loadText(InsertTextRequestModel message) {

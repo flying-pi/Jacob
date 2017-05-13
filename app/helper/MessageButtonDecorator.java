@@ -9,8 +9,9 @@ import java.util.Arrays;
  * Created by anatoly on 13.05.17.
  */
 public class MessageButtonDecorator {
-    public SendMessageModel sendMessageModel;
-    private MessageButtonDecorator(){}
+    SendMessageModel sendMessageModel;
+    private MessageButtonDecorator(){
+    }
 
     public static MessageButtonDecorator typicalDecorator(SendMessageModel sendMessageModel) {
         MessageButtonDecorator mbd = new MessageButtonDecorator();

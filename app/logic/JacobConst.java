@@ -10,4 +10,9 @@ public class JacobConst {
     public static class WORD{
         public static final int globalWordSet= 1;
     }
+
+    public static class TELEGRAM_RESPONSE{
+        public static final String loadedData = "Данные были отправлены на обработку, " +
+                "через некоторое время Ваш словарный запас пополнится";
+    }
 }
