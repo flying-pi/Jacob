@@ -1,10 +1,7 @@
 package controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.telegramModels.IncomingBotMessage;
-import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -22,19 +19,19 @@ public class BotController extends Controller {
 
     public Result receiveCommonBotMessage() {
         JsonNode requestData = request().body().asJson();
-        if (requestData == null) {
-            Logger.error("can not get json from telegram request");
-            return badRequest();
-        }
-        IncomingBotMessage message;
-        try {
-            message = mapper.treeToValue(requestData, IncomingBotMessage.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            Logger.error("can not  parse json", e);
-            return badRequest();
-        }
-        Logger.info("message from telegram :: " + message);
+//        if (requestData == null) {
+//            Logger.error("can not get json from telegram request");
+//            return badRequest();
+//        }
+//        IncomingBotMessage message;
+//        try {
+//            message = mapper.treeToValue(requestData, IncomingBotMessage.class);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//            Logger.error("can not  parse json", e);
+//            return badRequest();
+//        }
+//        Logger.info("message from telegram :: " + message);
 
         return ok("Jacob is Cool");
     }
