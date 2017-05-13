@@ -72,6 +72,7 @@ public class TextLoaderFirstVariant  implements ITextAnalayzer{
 
     @Override
     public void analyze(String input) {
+        this.content = input;
         new Thread(() -> {
             addLine(content);
             Map<String, Double> normolizedWord = sortByValue(normolize(wordFrequency), (o1, o2) -> {
