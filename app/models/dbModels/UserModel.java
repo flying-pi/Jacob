@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import models.telegramModels.IncomingBotMessage;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
+import play.Logger;
 import play.Play;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
@@ -62,6 +63,7 @@ public class UserModel {
         newWord.wordEng = word;
         learnedDictionary.add(newWord);
         messages().update("{\"userId\": \"" + this.userId + "\"}").with(this);
+        Logger.info("adding new word in db");
     }
 
     public UserModel insert() {

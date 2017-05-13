@@ -4,6 +4,7 @@ import logic.JacobConst;
 import models.dbModels.UserModel;
 import models.telegramModels.IncomingBotMessage;
 import play.Configuration;
+import play.Logger;
 import play.libs.ws.WSClient;
 
 import static logic.Utils.clear;
@@ -57,9 +58,12 @@ public class TextLoader {
             super.run();
             this.content = clear(getTextByUrl(url));
             UserModel user = getUserByChatMessage(message);
+            Logger.info("starting processing word");
             ITextAnalayzer analyzer = new TextLoaderFirstVariant();
-            analyzer.setResultListener(wordFrequencyMap ->
-                    wordFrequencyMap.forEach(user::addNewEnglisWord));
+            analyzer.setResultListener(wordFrequencyMap -> {
+                Logger.info("getting new words set for saving ");
+                wordFrequencyMap.forEach(user::addNewEnglisWord);
+            });
             analyzer.analyze(content);
         }
     }
