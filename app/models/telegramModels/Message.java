@@ -3,6 +3,8 @@ package models.telegramModels;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.List;
+
 
 public class Message {
 
@@ -11,6 +13,7 @@ public class Message {
     public Chat chat;
     public int date;
     public String text;
+    public List<Entities> entities;
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
