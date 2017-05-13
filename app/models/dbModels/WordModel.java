@@ -1,12 +1,24 @@
 package models.dbModels;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mongodb.WriteResult;
 import org.bson.types.ObjectId;
+import org.jongo.MongoCollection;
+import play.Play;
+import uk.co.panaxiom.playjongo.PlayJongo;
 
 /**
  * Created by stus on 13.05.17.
  */
 public class WordModel {
+
+
+    public static PlayJongo jongo = Play.application().injector().instanceOf(PlayJongo.class);
+
+    public static MongoCollection wordModel() {
+        return jongo.getCollection("wordModel");
+    }
+
     @JsonProperty("_id")
     public ObjectId id;
 
@@ -22,5 +34,11 @@ public class WordModel {
     }
 
     public WordModel() {
+    }
+
+    public WordModel insert() {
+        WriteResult result = wordModel().save(this);
+        this.id = (ObjectId) result.getUpsertedId();
+        return this;
     }
 }

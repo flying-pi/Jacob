@@ -9,6 +9,7 @@ import play.Logger;
 import play.Play;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,6 +63,7 @@ public class UserModel {
         WordModel newWord = new WordModel();
         newWord.frequency = frequency;
         newWord.wordEng = word;
+        newWord = newWord.insert();
         learnedDictionary.add(newWord);
         messages().update("{\"userId\": \"" + this.userId + "\"}").with(this);
         Logger.info("adding new word in db");
@@ -95,5 +97,8 @@ public class UserModel {
         return newUser.insert();
     }
 
-
+    @Nullable
+    public static UserModel getUserByID(String userID) {
+        return messages().findOne("{\"userId\": \"" + userID + "\"}").as(UserModel.class);
+    }
 }
