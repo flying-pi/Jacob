@@ -8,6 +8,7 @@ import play.Play;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -48,9 +49,13 @@ public class UserModel {
     }
 
     public void addNewEnglisWord(String word, double frequency) {
-        for (WordModel model : learnedDictionary) {
-            if (word.equals(model.wordEng))
-                return;
+        if (learnedDictionary != null) {
+            for (WordModel model : learnedDictionary) {
+                if (word.equals(model.wordEng))
+                    return;
+            }
+        } else {
+            learnedDictionary = new LinkedList<>();
         }
         WordModel newWord = new WordModel();
         newWord.frequency = frequency;
