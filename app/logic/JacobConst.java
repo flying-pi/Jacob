@@ -24,7 +24,7 @@ public class JacobConst {
         public static final String emptySet = "К сожалению у вас не выбрано слов для изучения...";
         public static final String enterTranslate = "Ввидите перевод для: ";
         public static final String correctWord = "Ответ правильный ";
-        public static final String wordWithError = "Слово написано с ошибкой :: ";
+        public static final String wordWithError = "Слово написано с ошибкой,  правильность ";
     }
 
     public class TELEGRAM_COMMANDS {

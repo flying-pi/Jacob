@@ -47,7 +47,7 @@ public class UnmarkedMessageProcessing {
         result.chat_id = message.message.chat.id;
         result.text = message.message.text.equals(word.wordEng) ?
                 JacobConst.TELEGRAM_RESPONSE.correctWord :
-                JacobConst.TELEGRAM_RESPONSE.wordWithError + k;
+                JacobConst.TELEGRAM_RESPONSE.wordWithError + ((int)k*100)+"%";
 
         MessageButtonDecorator decorator = MessageButtonDecorator.typicalDecorator(result);
         decorator.addMenu();
