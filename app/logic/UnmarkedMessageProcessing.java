@@ -39,6 +39,10 @@ public class UnmarkedMessageProcessing {
         WordModel word = userModel.learnedDictionary.get(userModel.lastWordIndex);
         double k = 1 - wordCorelation(word.wordEng, message.message.text);
 
+        word.progress = (1.0 - JacobConst.WORD_LEARN_GROW_UP) * word.progress + JacobConst.WORD_LEARN_GROW_UP * k;
+        word.update();
+        userModel.update();
+
         SendMessageModel result = new SendMessageModel();
         result.chat_id = message.message.chat.id;
         result.text = message.message.text.equals(word.wordEng) ?
