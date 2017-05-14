@@ -56,7 +56,7 @@ public class BotMenu {
     private void sendWord(IncomingBotMessage message) {
         WordCheck check = new WordCheck(String.valueOf(message.message.from.id));
         WordModel word = check.getWord();
-        if(word == null){
+        if (word == null) {
             SendMessageModel messageModel = new SendMessageModel();
             messageModel.text = JacobConst.TELEGRAM_RESPONSE.emptySet;
             messageModel.chat_id = message.message.chat.id;
@@ -64,10 +64,10 @@ public class BotMenu {
             decorator.addMenu();
             telegramApi.sendMessage(messageModel);
             return;
-        }
-        else {
+        } else {
             SendMessageModel messageModel = new SendMessageModel();
-            messageModel.text = JacobConst.TELEGRAM_RESPONSE.enterTranslate;
+            messageModel.text = JacobConst.TELEGRAM_RESPONSE.enterTranslate + word.wordRus
+                    + " " + String.valueOf((int) (word.progress * 100f));
             messageModel.chat_id = message.message.chat.id;
             MessageButtonDecorator decorator = MessageButtonDecorator.typicalDecorator(messageModel);
             decorator.addMenu();
