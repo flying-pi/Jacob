@@ -41,4 +41,9 @@ public class WordModel {
         this.id = (ObjectId) result.getUpsertedId();
         return this;
     }
+
+    public void update() {
+        wordModel().update("{\"userId\": \"" + id + "\"}").with(this);
+
+    }
 }

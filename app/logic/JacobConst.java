@@ -17,6 +17,7 @@ public class JacobConst {
                 "через некоторое время Ваш словарный запас пополнится";
         public static final String menuMessage = "Выберете пожалуйста пункты меню";
         public static final String recomendationListTitle = "Отмете пожалуйста слова для изучения";
+        public static final String recomendationFinish = "Выбор рекомендаций завершон";
     }
 
     public class TELEGRAM_COMMANDS {

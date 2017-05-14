@@ -33,7 +33,7 @@ public class UserModel {
 
     public static PlayJongo jongo = Play.application().injector().instanceOf(PlayJongo.class);
 
-    public static MongoCollection messages() {
+    public static MongoCollection users() {
         return jongo.getCollection("users");
     }
 
@@ -48,7 +48,7 @@ public class UserModel {
     public List<WordModel> learnedDictionary = new ArrayList<>();
 
     public UserModel getUserById(String id) {
-        return messages().findOne("{\"userId\": \"" + id + "\"}").as(UserModel.class);
+        return users().findOne("{\"userId\": \"" + id + "\"}").as(UserModel.class);
     }
 
     public void addNewEnglisWord(String word, double frequency) {
@@ -65,17 +65,17 @@ public class UserModel {
         newWord.wordEng = word;
         newWord = newWord.insert();
         learnedDictionary.add(newWord);
-        messages().update("{\"userId\": \"" + this.userId + "\"}").with(this);
+        users().update("{\"userId\": \"" + this.userId + "\"}").with(this);
         Logger.info("adding new word in db");
     }
 
     public UserModel insert() {
-        messages().save(this);
+        users().save(this);
         return this;
     }
 
     public static UserModel getUserByChatMessage(IncomingBotMessage botMessage) {
-        UserModel result = messages().findOne("{\"userId\": \"" + botMessage.message.from.id + "\"}").as(UserModel.class);
+        UserModel result = users().findOne("{\"userId\": \"" + botMessage.message.from.id + "\"}").as(UserModel.class);
         if (result != null)
             return result;
         UserModel newUser = new UserModel();
@@ -87,7 +87,7 @@ public class UserModel {
 
 
     public static UserModel getUserByChatMessage(InsertTextRequestModel request) {
-        UserModel result = messages().findOne("{\"userId\": \"" + request.userID + "\"}").as(UserModel.class);
+        UserModel result = users().findOne("{\"userId\": \"" + request.userID + "\"}").as(UserModel.class);
         if (result != null)
             return result;
         UserModel newUser = new UserModel();
@@ -99,6 +99,6 @@ public class UserModel {
 
     @Nullable
     public static UserModel getUserByID(String userID) {
-        return messages().findOne("{\"userId\": \"" + userID + "\"}").as(UserModel.class);
+        return users().findOne("{\"userId\": \"" + userID + "\"}").as(UserModel.class);
     }
 }

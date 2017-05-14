@@ -3,6 +3,7 @@ package logic;
 import helper.MessageButtonDecorator;
 import logic.externalServices.TelegramApi;
 import logic.recomendation.GenerateRecomendation;
+import logic.recomendation.SetRecommendation;
 import models.dbModels.WordModel;
 import models.telegramModels.IncomingBotMessage;
 import models.telegramModels.SendMessageModel;
@@ -41,7 +42,28 @@ public class BotMenu {
             sendOpenMenuMessage(message);
         } else if (command.equals(JacobConst.TELEGRAM_COMMANDS.getRecomendation)) {
             sendRecomendation(message);
+        }else if (command.startsWith(JacobConst.TELEGRAM_COMMANDS.reomendPrefix)){
+            addWord(message);
         }
+    }
+
+    private void addWord(IncomingBotMessage message) {
+        String recomend = message.message.text;
+        String[] puts = recomend.split(":");
+        if(recomend.length()<3){
+            SendMessageModel messageModel = new SendMessageModel();
+            messageModel.text = JacobConst.TELEGRAM_RESPONSE.recomendationFinish;
+            messageModel.chat_id = message.message.chat.id;
+            MessageButtonDecorator decorator = MessageButtonDecorator.typicalDecorator(messageModel);
+            decorator.addMenu();
+            telegramApi.sendMessage(messageModel);
+            return;
+        }else{
+            SetRecommendation setRecommendation = new SetRecommendation(String.valueOf(message.message.from.id));
+            setRecommendation.setRecomendationList(puts[1]);
+            sendRecomendation(message);
+        }
+
     }
 
     private void sendRecomendation(IncomingBotMessage message) {
