@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import logic.BotMenu;
+import logic.UnmarkedMessageProcessing;
 import logic.textImport.TextLoader;
 import models.telegramModels.IncomingBotMessage;
 import play.Configuration;
@@ -31,6 +32,7 @@ public class BotController extends Controller {
 
     private final TextLoader textLoader;
     private final BotMenu botMenu;
+    private final UnmarkedMessageProcessing messageProcessing;
 
     @Inject
     public BotController(WSClient wsClient, Configuration configuration) {
@@ -39,6 +41,7 @@ public class BotController extends Controller {
 
         textLoader = new TextLoader(wsClient, configuration);
         botMenu = new BotMenu(wsClient, configuration);
+        messageProcessing = new UnmarkedMessageProcessing(wsClient, configuration);
 
         this.mapper = new ObjectMapper();
 
@@ -47,6 +50,9 @@ public class BotController extends Controller {
 
         proccessCheck.add(BotMenu::IsMenu);
         processors.add(botMenu::proccessMessage);
+
+        proccessCheck.add(UnmarkedMessageProcessing::isUnmarkMessage);
+        processors.add(messageProcessing::process);
     }
 
     public Result receiveCommonBotMessage() {

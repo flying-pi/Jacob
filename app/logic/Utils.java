@@ -7,9 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -45,7 +43,7 @@ public class Utils {
                 ;
     }
 
-    public static <K, V > Map<K, V> sortByValue(Map<K, V> map, Comparator<? super V> comparator) {
+    public static <K, V> Map<K, V> sortByValue(Map<K, V> map, Comparator<? super V> comparator) {
         return map.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(comparator))
@@ -56,4 +54,41 @@ public class Utils {
                         LinkedHashMap::new
                 ));
     }
+
+    public static double wordCorelation(String word1, String word2) {
+        LinkedHashMap<Integer, Double> word1Chars = norimolize(wordToSequency(word1));
+        LinkedHashMap<Integer, Double> word2Chars = norimolize(wordToSequency(word2));
+        List<Double> diff = new ArrayList<>();
+        word1Chars.forEach((integer, aDouble) -> word2Chars.putIfAbsent(integer,0.0));
+        word1Chars.forEach((integer, aDouble) -> {
+            double k = aDouble -word2Chars.get(integer);
+            diff.add(k*k);
+        });
+        double sum = 0;
+        for(Double d:diff){
+            sum+=d;
+        }
+        return Math.sqrt(sum);
+    }
+
+    public static LinkedHashMap<Integer, Double> wordToSequency(String word) {
+        LinkedHashMap<Integer, Double> result = new LinkedHashMap<>();
+        for (int i = 0; i < word.length(); i++) {
+            result.putIfAbsent((int) word.charAt(i), 0.0);
+            result.put((int) word.charAt(i), result.get((int) word.charAt(i)) + 1);
+        }
+        return result;
+    }
+
+    public static LinkedHashMap<Integer, Double>norimolize (LinkedHashMap<Integer, Double> input){
+        final double[] k = {0};
+
+        input.values().forEach(aDouble -> k[0] +=aDouble*aDouble);
+        k[0] = Math.sqrt(k[0]);
+        LinkedHashMap<Integer, Double> result = new LinkedHashMap<>();
+        input.forEach((integer, aDouble) -> result.put(integer,aDouble/k[0]));
+        return result;
+    }
+
+
 }
