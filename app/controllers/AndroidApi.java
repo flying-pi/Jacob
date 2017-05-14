@@ -4,11 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import logic.recomendation.GenerateRecomendation;
+import logic.recomendation.SetRecommendation;
 import logic.textImport.TextLoader;
-import models.android.AndroidOkResponse;
-import models.android.GetRecommendationRequest;
-import models.android.InsertTextRequestModel;
-import models.android.RecommendationWord;
+import models.android.*;
 import play.Configuration;
 import play.Logger;
 import play.libs.Json;
@@ -86,5 +84,27 @@ public class AndroidApi extends Controller {
         List<RecommendationWord> result = new LinkedList<>();
         generateRecomendation.getRecomendationList().forEach(wordModel -> result.add(new RecommendationWord(wordModel)));
         return ok(Json.toJson(result));
+    }
+
+    public Result setRecomendation(){
+        JsonNode requestData = request().body().asJson();
+        if (requestData == null) {
+            Logger.error("can not get json from android request");
+            return ok();
+        }
+        Logger.info("getting new android message :: " + requestData);
+
+        SetRecommendationRequest message;
+        try {
+            message = mapper.treeToValue(requestData, SetRecommendationRequest.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            Logger.error("can not  parse json", e);
+            return ok();
+        }
+        Logger.info("message from android :: " + message);
+        SetRecommendation setRecommendation = new SetRecommendation(message.userID);
+        setRecommendation.setRecomendationList(message.wordIds);
+        return ok(Json.toJson(new AndroidOkResponse()));
     }
 }
