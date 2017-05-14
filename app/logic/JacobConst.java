@@ -19,6 +19,8 @@ public class JacobConst {
         public static final String recomendationListTitle = "Отмете пожалуйста слова для изучения";
         public static final String recomendationFinish = "Выбор рекомендаций завершон";
         public static final String allWordSetTitle = "Ваш список слов для изучения";
+        public static final String emptySet = "К сожалению у вас не выбрано слов для изучения...";
+        public static final String enterTranslate = "Ввидите перевод для: ";
     }
 
     public class TELEGRAM_COMMANDS {
@@ -27,5 +29,6 @@ public class JacobConst {
         public static final String getRecomendation = "/getRecommendation";
         public static final String getSetForLearn = "/showWordSet";
         public static final String reomendPrefix = "/recommend";
+        public static final String sendMewWord = "/sendWord";
     }
 }

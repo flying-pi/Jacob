@@ -44,6 +44,7 @@ public class UserModel {
     public String name = "";
     public String chatId = "";
     public List<StatisticModel> statistic = new ArrayList<>();
+    public int lastWordIndex = -1;
 
     public List<WordModel> learnedDictionary = new ArrayList<>();
 
@@ -69,7 +70,7 @@ public class UserModel {
         Logger.info("adding new word in db");
     }
 
-    public void update(){
+    public void update() {
         users().update("{\"userId\": \"" + this.userId + "\"}").with(this);
     }
 
