@@ -42,7 +42,7 @@ public class BotMenu {
             sendOpenMenuMessage(message);
         } else if (command.equals(JacobConst.TELEGRAM_COMMANDS.getRecomendation)) {
             sendRecomendation(message);
-        }else if (command.startsWith(JacobConst.TELEGRAM_COMMANDS.reomendPrefix)){
+        } else if (command.startsWith(JacobConst.TELEGRAM_COMMANDS.reomendPrefix)) {
             addWord(message);
         }
     }
@@ -50,7 +50,7 @@ public class BotMenu {
     private void addWord(IncomingBotMessage message) {
         String recomend = message.message.text;
         String[] puts = recomend.split(":");
-        if(recomend.length()<3){
+        if (recomend.length() < 3) {
             SendMessageModel messageModel = new SendMessageModel();
             messageModel.text = JacobConst.TELEGRAM_RESPONSE.recomendationFinish;
             messageModel.chat_id = message.message.chat.id;
@@ -58,7 +58,7 @@ public class BotMenu {
             decorator.addMenu();
             telegramApi.sendMessage(messageModel);
             return;
-        }else{
+        } else {
             SetRecommendation setRecommendation = new SetRecommendation(String.valueOf(message.message.from.id));
             setRecommendation.setRecomendationList(puts[1]);
             sendRecomendation(message);
@@ -78,7 +78,7 @@ public class BotMenu {
         for (int i = 0; i < 5; i++) {
             List<String> buttonRow = new LinkedList<>();
             for (int j = 0; j < 5; j++) {
-                if (i == 4 && j == 4) {
+                if ((i == 4 && j == 4) || i * 5 + j >= reommendation.size()) {
                     buttonRow.add(JacobConst.TELEGRAM_COMMANDS.reomendPrefix + ":stop");
                     break;
                 }
