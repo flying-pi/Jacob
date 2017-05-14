@@ -67,7 +67,7 @@ public class BotMenu {
         } else {
             SendMessageModel messageModel = new SendMessageModel();
             messageModel.text = JacobConst.TELEGRAM_RESPONSE.enterTranslate + word.wordRus
-                    + " " + String.valueOf((int) (word.progress * 100f));
+                    + " " + String.valueOf((int) (word.progress * 1000f));
             messageModel.chat_id = message.message.chat.id;
             MessageButtonDecorator decorator = MessageButtonDecorator.typicalDecorator(messageModel);
             decorator.addMenu();
