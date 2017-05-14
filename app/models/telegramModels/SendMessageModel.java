@@ -32,6 +32,7 @@ public class SendMessageModel {
 
     public static class Keyboard {
         public List<List<String>> keyboard;
+        public  boolean resize_keyboard = true;
 
         public Keyboard(){
             keyboard = new ArrayList<>();
