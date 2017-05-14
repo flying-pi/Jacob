@@ -8,7 +8,7 @@ public class JacobConst {
         public static final  String BOT_COMMAND = "bot_command";
     }
 
-    public static double WORD_LEARN_GROW_UP = 0.42;
+    public static double WORD_LEARN_GROW_UP = 0.1;
 
     public static class WORD{
         public static final int globalWordSet= 1;
