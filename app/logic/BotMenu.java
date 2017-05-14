@@ -126,18 +126,15 @@ public class BotMenu {
         messageModel.chat_id = message.message.chat.id;
         MessageButtonDecorator decorator = MessageButtonDecorator.typicalDecorator(messageModel);
 
-        for (int i = 0; i < 5; i++) {
+        reommendation.forEach(wordModel -> {
             List<String> buttonRow = new LinkedList<>();
-            for (int j = 0; j < 5; j++) {
-                if ((i == 4 && j == 4) || (i * 5 + j >= reommendation.size())) {
-                    buttonRow.add(JacobConst.TELEGRAM_COMMANDS.reomendPrefix + ":stop");
-                    break;
-                }
-                WordModel currentRecommend = reommendation.get(5 * i + j);
-                buttonRow.add(JacobConst.TELEGRAM_COMMANDS.reomendPrefix + ":" + currentRecommend.id + ":" + currentRecommend.wordEng);
-            }
+            buttonRow.add(JacobConst.TELEGRAM_COMMANDS.reomendPrefix + ":" + wordModel.id + ":" + wordModel.wordEng);
             decorator.addButtonsLine(buttonRow);
-        }
+        });
+
+        List<String> buttonRow = new LinkedList<>();
+        buttonRow.add(JacobConst.TELEGRAM_COMMANDS.reomendPrefix + ":stop");
+        decorator.addButtonsLine(buttonRow);
 
         telegramApi.sendMessage(messageModel);
 
