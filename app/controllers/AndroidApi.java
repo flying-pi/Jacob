@@ -3,10 +3,12 @@ package controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import logic.learn.WordSetGenerator;
 import logic.recomendation.GenerateRecomendation;
 import logic.recomendation.SetRecommendation;
 import logic.textImport.TextLoader;
 import models.android.*;
+import models.dbModels.WordModel;
 import play.Configuration;
 import play.Logger;
 import play.libs.Json;
@@ -15,6 +17,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -63,7 +66,7 @@ public class AndroidApi extends Controller {
         return ok(Json.toJson(new AndroidOkResponse()));
     }
 
-    public Result getRecomendation(){
+    public Result getRecomendation() {
         JsonNode requestData = request().body().asJson();
         if (requestData == null) {
             Logger.error("can not get json from android request");
@@ -71,9 +74,9 @@ public class AndroidApi extends Controller {
         }
         Logger.info("getting new android message :: " + requestData);
 
-        GetRecommendationRequest message;
+        RequestWithUserID message;
         try {
-            message = mapper.treeToValue(requestData, GetRecommendationRequest.class);
+            message = mapper.treeToValue(requestData, RequestWithUserID.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             Logger.error("can not  parse json", e);
@@ -86,7 +89,7 @@ public class AndroidApi extends Controller {
         return ok(Json.toJson(result));
     }
 
-    public Result setRecomendation(){
+    public Result setRecomendation() {
         JsonNode requestData = request().body().asJson();
         if (requestData == null) {
             Logger.error("can not get json from android request");
@@ -106,5 +109,31 @@ public class AndroidApi extends Controller {
         SetRecommendation setRecommendation = new SetRecommendation(message.userID);
         setRecommendation.setRecomendationList(message.wordIds);
         return ok(Json.toJson(new AndroidOkResponse()));
+    }
+
+    public Result getAllWordSet() {
+        JsonNode requestData = request().body().asJson();
+        if (requestData == null) {
+            Logger.error("can not get json from android request");
+            return ok();
+        }
+        Logger.info("getting new android message :: " + requestData);
+
+        RequestWithUserID message;
+        try {
+            message = mapper.treeToValue(requestData, RequestWithUserID.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            Logger.error("can not  parse json", e);
+            return ok();
+        }
+        Logger.info("message from android :: " + message);
+
+        WordSetGenerator wordSetGenerator = new WordSetGenerator(message.userID);
+        List<WordModel> words = wordSetGenerator.getWordSetForUser();
+        List<RecommendationWord> listForSend = new ArrayList<>();
+        words.forEach(wordModel -> listForSend.add(new RecommendationWord(wordModel)));
+        return ok(Json.toJson(listForSend));
+
     }
 }
