@@ -37,7 +37,7 @@ public class UnmarkedMessageProcessing {
         if (userModel.lastWordIndex == -1)
             return;
         WordModel word = userModel.learnedDictionary.get(userModel.lastWordIndex);
-        double k = wordCorelation(word.wordEng, message.message.text);
+        double k = 1 - wordCorelation(word.wordEng, message.message.text);
 
         SendMessageModel result = new SendMessageModel();
         result.chat_id = message.message.chat.id;
