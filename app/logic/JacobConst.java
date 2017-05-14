@@ -18,13 +18,14 @@ public class JacobConst {
         public static final String menuMessage = "Выберете пожалуйста пункты меню";
         public static final String recomendationListTitle = "Отмете пожалуйста слова для изучения";
         public static final String recomendationFinish = "Выбор рекомендаций завершон";
+        public static final String allWordSetTitle = "Ваш список слов для изучения";
     }
 
     public class TELEGRAM_COMMANDS {
 
         public static final String menu = "/menu";
         public static final String getRecomendation = "/getRecommendation";
-        public static final String getSetForLearn = "/getWordSet";
+        public static final String getSetForLearn = "/showWordSet";
         public static final String reomendPrefix = "/recommend";
     }
 }

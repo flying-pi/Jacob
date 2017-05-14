@@ -2,6 +2,7 @@ package logic;
 
 import helper.MessageButtonDecorator;
 import logic.externalServices.TelegramApi;
+import logic.learn.WordSetGenerator;
 import logic.recomendation.GenerateRecomendation;
 import logic.recomendation.SetRecommendation;
 import models.dbModels.WordModel;
@@ -44,7 +45,30 @@ public class BotMenu {
             sendRecomendation(message);
         } else if (command.startsWith(JacobConst.TELEGRAM_COMMANDS.reomendPrefix)) {
             addWord(message);
+        } else if (command.equals(JacobConst.TELEGRAM_COMMANDS.getSetForLearn)) {
+            displayLearnSet(message);
         }
+    }
+
+    private void displayLearnSet(IncomingBotMessage message) {
+        List<WordModel> wordSet = new WordSetGenerator(String.valueOf(message.message.from.id))
+                .getWordSetForUser();
+
+        SendMessageModel messageModel = new SendMessageModel();
+        messageModel.text = JacobConst.TELEGRAM_RESPONSE.allWordSetTitle;
+        messageModel.chat_id = message.message.chat.id;
+        MessageButtonDecorator decorator = MessageButtonDecorator.typicalDecorator(messageModel);
+
+
+        wordSet.forEach(wordModel -> {
+            List<String> buttons = new LinkedList<>();
+            buttons.add(wordModel.wordEng + " => " + wordModel.wordRus);
+            decorator.addButtonsLine(buttons);
+        });
+
+        decorator.addMenu();
+
+        telegramApi.sendMessage(messageModel);
     }
 
     private void addWord(IncomingBotMessage message) {
