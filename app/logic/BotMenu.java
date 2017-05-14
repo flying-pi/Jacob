@@ -50,7 +50,7 @@ public class BotMenu {
     private void addWord(IncomingBotMessage message) {
         String recomend = message.message.text;
         String[] puts = recomend.split(":");
-        if (recomend.length() < 3) {
+        if (puts.length < 3) {
             SendMessageModel messageModel = new SendMessageModel();
             messageModel.text = JacobConst.TELEGRAM_RESPONSE.recomendationFinish;
             messageModel.chat_id = message.message.chat.id;
@@ -78,7 +78,7 @@ public class BotMenu {
         for (int i = 0; i < 5; i++) {
             List<String> buttonRow = new LinkedList<>();
             for (int j = 0; j < 5; j++) {
-                if ((i == 4 && j == 4) || i * 5 + j >= reommendation.size()) {
+                if ((i == 4 && j == 4) || (i * 5 + j >= reommendation.size())) {
                     buttonRow.add(JacobConst.TELEGRAM_COMMANDS.reomendPrefix + ":stop");
                     break;
                 }

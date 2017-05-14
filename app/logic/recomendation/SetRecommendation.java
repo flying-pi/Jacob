@@ -35,6 +35,7 @@ public class SetRecommendation {
                     word.progress = 0.001d;
                     word.wordRus = "перевод" + word.wordEng;
                     word.update();
+                    user.update();
                 }
                 i = -1;
                 break;

@@ -69,6 +69,10 @@ public class UserModel {
         Logger.info("adding new word in db");
     }
 
+    public void update(){
+        users().update("{\"userId\": \"" + this.userId + "\"}").with(this);
+    }
+
     public UserModel insert() {
         users().save(this);
         return this;
